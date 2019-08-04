@@ -39,32 +39,27 @@ public class KonkukSeatCrawlerService implements SeatCrawlerService {
         String url = mainUri+optionUri;
 
         for(String classCode : classCodeList) {
-
             Map<String, Object> seatInfo = new HashMap<>();
             seatInfo.put("CLASS_CODE", classCode);
-            url = url + "2038";
 
             try {
-                Document doc = Jsoup.connect(url).post();
+                Document doc = Jsoup.connect(url+classCode).post();
                 Elements element = doc.select("td.table_bg_white");
-
-                System.out.println(element.toString());
                 int count = 0;
-//                for (Element el : element.select("td.table_bg_white")) {
-//                    System.out.println(el.text());
-////                if(count == 1){
-////                    seatInfo.put("REMAIN_NUM", Integer.parseInt(el.text()));
-////                }else if(count == 2){
-////                    seatInfo.put("TOTAL_NUM", Integer.parseInt(el.text()));
-////                }
-//                    count++;
-//                }
+                for (Element el : element) {
+                    if(count == 1){
+                        seatInfo.put("REMAIN_NUM", Integer.parseInt(el.text()));
+                    }else if(count == 2){
+                        seatInfo.put("TOTAL_NUM", Integer.parseInt(el.text()));
+                    }
+                    count++;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             System.out.println(seatInfo.toString());
-            //updateSeatInfo(seatInfo);
+            updateSeatInfo(seatInfo);
         }
     }
 

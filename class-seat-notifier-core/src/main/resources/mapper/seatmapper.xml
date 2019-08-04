@@ -7,7 +7,7 @@
     </select>
     <update id="updateClassSeatInfo" parameterType="map">
         UPDATE SEAT
-        SET REMAIN_NUM = #{REMAIN_NUM}, TOTAL_NUM = #{REMAIN_NUM}
+        SET REMAIN_NUM = #{REMAIN_NUM}, TOTAL_NUM = #{TOTAL_NUM}
         WHERE CLASS_CODE = #{CLASS_CODE}
     </update>
 </mapper>

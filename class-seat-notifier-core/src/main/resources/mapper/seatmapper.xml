@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+
+<mapper namespace="com.studiou.classseatnotifiercore.seat">
+    <select id="selectClassCodeList" resultType="String">
+        SELECT CLASS_CODE FROM SEAT
+    </select>
+    <update id="updateClassSeatInfo" parameterType="map">
+        UPDATE SEAT
+        SET REMAIN_NUM = #{REMAIN_NUM}, TOTAL_NUM = #{REMAIN_NUM}
+        WHERE CLASS_CODE = #{CLASS_CODE}
+    </update>
+</mapper>

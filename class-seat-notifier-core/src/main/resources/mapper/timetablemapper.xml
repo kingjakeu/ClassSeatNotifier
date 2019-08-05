@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+
+<mapper namespace="com.studiou.classseatnotifiercore.timetable">
+    <select id="selectClassCodeList" resultType="String">
+        SELECT CLASS_CODE FROM TIMETABLE
+    </select>
+    <insert id="insertClassInfo" parameterType="map">
+        INSERT INTO TIMETABLE
+        (CLASS_CODE, NAME, TYPE, CREDIT, INSTRUCTOR, LOCATION, TIME, GRADE)
+        VALUES
+        (#{CLASS_CODE}, #{NAME}, #{TYPE}, #{CREDIT}, #{INSTRUCTOR}, #{LOCATION}, #{TIME}, #{GRADE})
+        ON DUPLICATE KEY UPDATE
+        NAME=#{NAME}, TYPE=#{TYPE}, CREDIT=#{CREDIT}, INSTRUCTOR=#{INSTRUCTOR},
+        LOCATION=#{LOCATION}, TIME=#{TIME}, GRADE=#{GRADE}
+    </insert>
+    <update id="updateClassInfo" parameterType="map">
+        UPDATE TIMETABLE
+        SET REMAIN_NUM = #{REMAIN_NUM}, TOTAL_NUM = #{TOTAL_NUM}
+        WHERE CLASS_CODE = #{CLASS_CODE}
+    </update>
+</mapper>

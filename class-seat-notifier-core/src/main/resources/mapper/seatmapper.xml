@@ -5,6 +5,38 @@
     <select id="selectClassCodeList" resultType="String">
         SELECT CLASS_CODE FROM SEAT
     </select>
+    <insert id="insertClassSeatInfo" parameterType="map">
+        INSERT INTO SEAT
+        (CLASS_CODE
+        <if test="REMAIN_NUM!=null and REMAIN_NUM!=''">
+            ,REMAIN_NUM
+        </if>
+        <if test="BF_NUM!=null and BF_NUM!=''">
+            ,BF_NUM
+        </if>
+        <if test="TOTAL_NUM!=null and TOTAL_NUM!=''">
+            ,TOTAL_NUM
+        </if>
+        <if test="WANTED_NUM!=null and WANTED_NUM!=''">
+            ,WANTED_NUM
+        </if>
+        )
+        VALUES(
+        #{CLASS_CODE}
+        <if test="REMAIN_NUM!=null and REMAIN_NUM!=''">
+            ,#{REMAIN_NUM}
+        </if>
+        <if test="BF_NUM!=null and BF_NUM!=''">
+            ,#{BF_NUM}
+        </if>
+        <if test="TOTAL_NUM!=null and TOTAL_NUM!=''">
+            ,#{TOTAL_NUM}
+        </if>
+        <if test="WANTED_NUM!=null and WANTED_NUM!=''">
+            ,#{WANTED_NUM}
+        </if>
+        )
+    </insert>
     <update id="updateClassSeatInfo" parameterType="map">
         UPDATE SEAT
         SET REMAIN_NUM = #{REMAIN_NUM}, TOTAL_NUM = #{TOTAL_NUM}

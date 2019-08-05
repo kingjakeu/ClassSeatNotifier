@@ -2,6 +2,7 @@ package com.studiou.classseatnotifiercore.crawler.seat.service.impl;
 
 import com.studiou.classseatnotifiercore.crawler.seat.dao.SeatCrawlerDao;
 import com.studiou.classseatnotifiercore.crawler.seat.service.SeatCrawlerService;
+import com.studiou.classseatnotifiercore.util.ConstStrings;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,12 +19,12 @@ import java.util.Map;
 @Service
 public class KonkukSeatCrawlerService implements SeatCrawlerService {
     private final String mainUri = "https://kupis.konkuk.ac.kr/sugang/acd/cour/aply/CourInwonInqTime.jsp?";
-    private String optionUri = "ltYy=2019&ltShtm=B01012&sbjtId=";
+    private String optionUri = "ltYy="+ ConstStrings.YEAR+"&ltShtm="+ConstStrings.SEMESTER+"&sbjtId=";
     @Autowired
     private SeatCrawlerDao seatCrawlerDao;
 
     @Override
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 60000)
     public void searchSeatScheduler() {
         getSeatDataFromSource(getClassCodeList());
     }
@@ -49,9 +50,11 @@ public class KonkukSeatCrawlerService implements SeatCrawlerService {
                 for (Element el : element) {
                     if(count == 1){
                         seatInfo.put("REMAIN_NUM", Integer.parseInt(el.text()));
+                        seatInfo.put("BF_NUM", Integer.parseInt(el.text()));
                     }else if(count == 2){
                         seatInfo.put("TOTAL_NUM", Integer.parseInt(el.text()));
                     }
+                    seatInfo.put("WANTED_NUM", 1);
                     count++;
                 }
             } catch (IOException e) {

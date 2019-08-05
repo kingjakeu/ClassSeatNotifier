@@ -1,6 +1,5 @@
 package com.studiou.classseatnotifiercore.crawler.seat.dao;
 
-import com.sun.org.apache.xml.internal.utils.NameSpace;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,6 +16,9 @@ public class SeatCrawlerDao {
 
     public List<String> selectClassCodeList(){
         return sqlSession.selectList(NAMESPACE+"selectClassCodeList");
+    }
+    public void insertClassSeatInfo(Map<String, Object> seatInfo){
+        sqlSession.insert(NAMESPACE+"insertClassSeatInfo", seatInfo);
     }
     public void updateClassSeatInfo(Map<String, Object> seatInfo){
         sqlSession.update(NAMESPACE+"updateClassSeatInfo", seatInfo);

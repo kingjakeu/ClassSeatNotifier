@@ -3,12 +3,10 @@ package com.studiou.classseatnotifiercore.info.controller;
 import com.studiou.classseatnotifiercore.info.service.InfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,8 +23,9 @@ public class InfoController {
         infoService.wantClassSeat(wantSeatInfo);
         return wantSeatInfo;
     }
-    @PostMapping(value = "classnotwanted")
-    public void notWantClassSeat(@RequestParam String classCode){
 
+    @GetMapping(value = "/classlist")
+    public List<Map<String, Object>> classList(@RequestParam List<String> keyword){
+        return infoService.getClassList(keyword);
     }
 }

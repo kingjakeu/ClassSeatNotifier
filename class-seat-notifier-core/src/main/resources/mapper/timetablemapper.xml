@@ -5,6 +5,15 @@
     <select id="selectClassCodeList" resultType="String">
         SELECT CLASS_CODE FROM TIMETABLE
     </select>
+    <select id="selectClassBasicInfoByKeyword" parameterType="map" resultType="map">
+        SELECT
+        CLASS_CODE, NAME, TYPE, CREDIT, GRADE, INSTRUCTOR, LOCATION, MAJOR
+        FROM TIMETABLE
+        WHERE
+        CLASS_CODE LIKE #{KEYWORD}
+        OR NAME LIKE #{KEYWORD}
+        OR INSTRUCTOR LIKE #{KEYWORD}
+    </select>
     <insert id="insertClassInfo" parameterType="map">
         INSERT INTO TIMETABLE
         (CLASS_CODE, NAME, TYPE, CREDIT, INSTRUCTOR, LOCATION, GRADE, MAJOR, YEAR, SEMESTER)

@@ -19,7 +19,10 @@ public class InfoDao {
     public void updateWantedSeatNum(Map<String, Object> wantSeatInfo){
         sqlSession.update(SEAT_NAMESPACE+"updateWantedSeatNum", wantSeatInfo);
     }
-    public Map<String, Object> selectWantSeatInfo(Map<String, Object> seatInfo){
-        return sqlSession.selectOne(SEAT_NAMESPACE+"selectWantSeatInfo", seatInfo);
+    public Map<String, Object> selectWantSeatInfo(Map<String, Object> seatInfo) {
+        return sqlSession.selectOne(SEAT_NAMESPACE + "selectWantSeatInfo", seatInfo);
+    }
+    public List<Map<String, Object>> selectClassBasicInfoByKeyword(Map<String, Object> searchInfo){
+        return sqlSession.selectList(TIMETABLE_NAMESPACE+"selectClassBasicInfoByKeyword",searchInfo);
     }
 }

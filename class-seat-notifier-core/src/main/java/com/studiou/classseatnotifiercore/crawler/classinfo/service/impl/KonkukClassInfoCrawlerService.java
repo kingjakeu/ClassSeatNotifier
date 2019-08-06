@@ -37,7 +37,7 @@ public class KonkukClassInfoCrawlerService implements ClassInfoCrawlerService {
     private MajorInfoCrawler majorInfoCrawler;
 
     @Override
-    @Scheduled(fixedDelay = 86400000)
+    @Scheduled(cron = "0 0 12 * * ?")
     public void searchClassInfoScheduler() {
         getClassInfoFromSource();
         updateClassInfo();
@@ -62,6 +62,7 @@ public class KonkukClassInfoCrawlerService implements ClassInfoCrawlerService {
                 for (int i=1; i<leng; i++){
                     Element el = element.select("td").get(i);
                     if(i%18 == 0){
+                        info.add(majorCode);
                         Map<String, Object> mappedInfo = classInfoMapper.classInfoMapper(info);
                         classInfoCrawlerDao.insertClassInfo(mappedInfo);
                         info = new ArrayList<>();
@@ -69,6 +70,7 @@ public class KonkukClassInfoCrawlerService implements ClassInfoCrawlerService {
                         info.add(el.text());
                     }
                 }
+
             }catch (IOException e){
                 e.printStackTrace();
             }

@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,43 +25,44 @@ public class KonkukSeatCrawlerService implements SeatCrawlerService {
     private SeatCrawlerDao seatCrawlerDao;
 
     @Override
-    @Scheduled(fixedDelay = 60000)
+    @Scheduled(fixedRate = 5000)
     public void searchSeatScheduler() {
         getSeatDataFromSource(getClassCodeList());
     }
 
     @Override
-    public List<String> getClassCodeList() {
-        List<String> classCodeList = seatCrawlerDao.selectClassCodeList();
+    public List<Map<String, Object>> getClassCodeList() {
+        List<Map<String, Object>> classCodeList = seatCrawlerDao.selectClassCodeList();
         return classCodeList;
     }
 
     @Override
-    public void getSeatDataFromSource(List<String> classCodeList) {
+    public void getSeatDataFromSource(List<Map<String, Object>> classCodeList) {
         String url = mainUri+optionUri;
 
-        for(String classCode : classCodeList) {
-            Map<String, Object> seatInfo = new HashMap<>();
-            seatInfo.put("CLASS_CODE", classCode);
-
+        for(Map<String, Object> seatInfo : classCodeList) {
+            String classCode = seatInfo.get("CLASS_CODE").toString();
             try {
                 Document doc = Jsoup.connect(url+classCode).post();
                 Elements element = doc.select("td.table_bg_white");
-                int count = 0;
-                for (Element el : element) {
-                    if(count == 1){
-                        seatInfo.put("REMAIN_NUM", Integer.parseInt(el.text()));
-                        seatInfo.put("BF_NUM", Integer.parseInt(el.text()));
-                    }else if(count == 2){
-                        seatInfo.put("TOTAL_NUM", Integer.parseInt(el.text()));
-                    }
-                    seatInfo.put("WANTED_NUM", 1);
-                    count++;
+                ArrayList<String> elementText = new ArrayList<>();
+                int elementSize = element.size();
+                for (int i=1; i<elementSize; i++){
+                    elementText.add(element.get(i).text());
                 }
+                int bfNum = Integer.parseInt(seatInfo.get("REMAIN_NUM").toString());
+                int remainNum = Integer.parseInt(elementText.get(1)) - Integer.parseInt(elementText.get(0));
+
+                if(remainNum>bfNum){
+                    /// PUSH WHO WANT THIS CLASS
+                    System.out.println("SEND PUSH");
+                }
+                seatInfo.put("REMAIN_NUM", remainNum);
+                seatInfo.put("TOTAL_NUM", elementText.get(1));
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             System.out.println(seatInfo.toString());
             updateSeatInfo(seatInfo);
         }

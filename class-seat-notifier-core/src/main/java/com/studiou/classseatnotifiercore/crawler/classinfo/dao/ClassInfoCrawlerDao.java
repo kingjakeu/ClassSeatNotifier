@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class ClassInfoCrawlerDao {
+public class  ClassInfoCrawlerDao {
 
     protected static final String NAMESPACE = "com.studiou.classseatnotifiercore.timetable.";
 

@@ -1,5 +1,6 @@
 package com.studiou.classseatnotifiercore.crawler.classinfo.mapper;
 
+import com.studiou.classseatnotifiercore.util.ConstStrings;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
@@ -17,7 +18,9 @@ public class ClassInfoMapper {
         classInfo.put("CREDIT", Integer.parseInt(info.get(5)));
         classInfo.put("INSTRUCTOR", info.get(9));
         classInfo.put("LOCATION", info.get(8));
-        classInfo.put("TIME", info.get(6));
+        classInfo.put("MAJOR", info.get(17));
+        classInfo.put("YEAR", ConstStrings.YEAR);
+        classInfo.put("SEMESTER", ConstStrings.SEMESTER);
         System.out.println(classInfo.toString());
         return classInfo;
     }

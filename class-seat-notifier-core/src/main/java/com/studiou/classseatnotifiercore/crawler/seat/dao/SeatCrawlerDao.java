@@ -14,7 +14,7 @@ public class SeatCrawlerDao {
     @Autowired
     private SqlSession sqlSession;
 
-    public List<String> selectClassCodeList(){
+    public List<Map<String, Object>> selectClassCodeList(){
         return sqlSession.selectList(NAMESPACE+"selectClassCodeList");
     }
     public void insertClassSeatInfo(Map<String, Object> seatInfo){

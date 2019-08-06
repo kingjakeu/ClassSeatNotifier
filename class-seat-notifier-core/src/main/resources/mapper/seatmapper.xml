@@ -2,17 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
 
 <mapper namespace="com.studiou.classseatnotifiercore.seat">
-    <select id="selectClassCodeList" resultType="String">
-        SELECT CLASS_CODE FROM SEAT
+    <select id="selectClassCodeList" resultType="map">
+        SELECT CLASS_CODE, REMAIN_NUM FROM SEAT
+        WHERE WANTED_NUM > 0
+    </select>
+    <select id="selectWantSeatInfo" parameterType="map" resultType="map">
+        SELECT WANTED_NUM FROM SEAT WHERE CLASS_CODE = ${CLASS_CODE}
     </select>
     <insert id="insertClassSeatInfo" parameterType="map">
         INSERT INTO SEAT
         (CLASS_CODE
         <if test="REMAIN_NUM!=null and REMAIN_NUM!=''">
             ,REMAIN_NUM
-        </if>
-        <if test="BF_NUM!=null and BF_NUM!=''">
-            ,BF_NUM
         </if>
         <if test="TOTAL_NUM!=null and TOTAL_NUM!=''">
             ,TOTAL_NUM
@@ -26,9 +27,6 @@
         <if test="REMAIN_NUM!=null and REMAIN_NUM!=''">
             ,#{REMAIN_NUM}
         </if>
-        <if test="BF_NUM!=null and BF_NUM!=''">
-            ,#{BF_NUM}
-        </if>
         <if test="TOTAL_NUM!=null and TOTAL_NUM!=''">
             ,#{TOTAL_NUM}
         </if>
@@ -40,6 +38,11 @@
     <update id="updateClassSeatInfo" parameterType="map">
         UPDATE SEAT
         SET REMAIN_NUM = #{REMAIN_NUM}, TOTAL_NUM = #{TOTAL_NUM}
+        WHERE CLASS_CODE = #{CLASS_CODE}
+    </update>
+    <update id="updateWantedSeatNum" parameterType="map">
+        UPDATE SEAT
+        SET WANTED_NUM = #{WANTED_NUM}
         WHERE CLASS_CODE = #{CLASS_CODE}
     </update>
 </mapper>

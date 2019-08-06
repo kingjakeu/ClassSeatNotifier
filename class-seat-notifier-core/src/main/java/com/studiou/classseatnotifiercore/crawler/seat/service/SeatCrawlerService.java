@@ -6,7 +6,7 @@ import java.util.Map;
 
 public interface SeatCrawlerService {
     void searchSeatScheduler();
-    List<String> getClassCodeList();
-    void getSeatDataFromSource(List<String> classCodeList);
+    List<Map<String, Object>> getClassCodeList();
+    void getSeatDataFromSource(List<Map<String, Object>> classCodeList);
     void updateSeatInfo(Map<String, Object> seatInfo);
 }

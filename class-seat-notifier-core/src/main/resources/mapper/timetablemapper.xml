@@ -7,12 +7,12 @@
     </select>
     <insert id="insertClassInfo" parameterType="map">
         INSERT INTO TIMETABLE
-        (CLASS_CODE, NAME, TYPE, CREDIT, INSTRUCTOR, LOCATION, TIME, GRADE)
+        (CLASS_CODE, NAME, TYPE, CREDIT, INSTRUCTOR, LOCATION, GRADE, MAJOR, YEAR, SEMESTER)
         VALUES
-        (#{CLASS_CODE}, #{NAME}, #{TYPE}, #{CREDIT}, #{INSTRUCTOR}, #{LOCATION}, #{TIME}, #{GRADE})
+        (#{CLASS_CODE}, #{NAME}, #{TYPE}, #{CREDIT}, #{INSTRUCTOR}, #{LOCATION}, #{GRADE}, #{MAJOR}, #{YEAR}, #{SEMESTER})
         ON DUPLICATE KEY UPDATE
         NAME=#{NAME}, TYPE=#{TYPE}, CREDIT=#{CREDIT}, INSTRUCTOR=#{INSTRUCTOR},
-        LOCATION=#{LOCATION}, TIME=#{TIME}, GRADE=#{GRADE}
+        LOCATION=#{LOCATION}, GRADE=#{GRADE}, MAJOR=#{MAJOR}, YEAR=#{YEAR}, SEMESTER=#{SEMESTER}
     </insert>
     <update id="updateClassInfo" parameterType="map">
         UPDATE TIMETABLE

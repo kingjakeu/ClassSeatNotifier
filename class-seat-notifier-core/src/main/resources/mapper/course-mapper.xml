@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+
+<mapper namespace="com.studiou.classseatnotifiercore.course">
+    <select id="selectCourseIdList" resultType="String">
+        SELECT ID FROM COURSE
+    </select>
+    <select id="selectCourseBasicInfoByKeyword" parameterType="map" resultType="map">
+        SELECT
+        COURSE.ID, COURSE.NAME, COURSE.TYPE, COURSE.CREDIT, COURSE.GRADE, COURSE.INSTRUCTOR, COURSE.LOCATION, COURSE.DEPT_ID,
+        CAPACITY.REMAIN, CAPACITY.TOTAL
+        FROM COURSE JOIN CAPACITY ON COURSE.ID = CAPACITY.COURSE_ID
+        WHERE
+        COURSE.ID LIKE #{KEYWORD}
+        OR COURSE.NAME LIKE #{KEYWORD}
+        OR COURSE.INSTRUCTOR LIKE #{KEYWORD}
+    </select>
+    <insert id="insertCourseInfo" parameterType="map">
+        INSERT INTO COURSE
+        (ID, NAME, TYPE, CREDIT, INSTRUCTOR, LOCATION, GRADE, DEPT_ID, YEAR, SEMESTER)
+        VALUES
+        (#{ID}, #{NAME}, #{TYPE}, #{CREDIT}, #{INSTRUCTOR}, #{LOCATION}, #{GRADE}, #{DEPT_ID}, #{YEAR}, #{SEMESTER})
+        ON DUPLICATE KEY UPDATE
+        NAME=#{NAME}, TYPE=#{TYPE}, CREDIT=#{CREDIT}, INSTRUCTOR=#{INSTRUCTOR},
+        LOCATION=#{LOCATION}, GRADE=#{GRADE}, DEPT_ID=#{DEPT_ID}, YEAR=#{YEAR}, SEMESTER=#{SEMESTER}
+    </insert>
+    <update id="updateCourseInfo" parameterType="map">
+        UPDATE COURSE
+        SET REMAIN = #{REMAIN}, TOTAL = #{TOTAL}
+        WHERE ID = #{ID}
+    </update>
+</mapper>

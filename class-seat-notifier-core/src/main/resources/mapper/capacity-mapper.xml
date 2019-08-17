@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+
+<mapper namespace="com.studiou.Courseseatnotifiercore.capacity">
+    <select id="selectCourseCodeList" resultType="map">
+        SELECT COURSE_ID, REMAIN FROM CAPACITY
+        WHERE WANTED > 0
+    </select>
+    <select id="selectCourseWantedNum" parameterType="map" resultType="map">
+        SELECT WANTED FROM CAPACITY WHERE COURSE_ID = ${COURSE_ID}
+    </select>
+    <insert id="insertCourseCapInfo" parameterType="map">
+        INSERT INTO CAPACITY
+        (COURSE_ID
+        <if test="REMAIN!=null and REMAIN!=''">
+            ,REMAIN
+        </if>
+        <if test="ENROLLED!=null and ENROLLED!=''">
+            ,ENROLLED
+        </if>
+        <if test="TOTAL!=null and TOTAL!=''">
+            ,TOTAL
+        </if>
+        <if test="WANTED!=null and WANTED!=''">
+            ,WANTED
+        </if>
+        )
+        VALUES(
+        #{COURSE_ID}
+        <if test="REMAIN_NUM!=null and REMAIN_NUM!=''">
+            ,#{REMAIN}
+        </if>
+        <if test="ENROLLED!=null and ENROLLED!=''">
+            ,#{ENROLLED}
+        </if>
+        <if test="TOTAL!=null and TOTAL!=''">
+            ,#{TOTAL}
+        </if>
+        <if test="WANTED!=null and WANTED!=''">
+            ,#{WANTED}
+        </if>
+        )
+    </insert>
+    <update id="updateCourseCapInfo" parameterType="map">
+        UPDATE CAPACITY
+        SET REMAIN = #{REMAIN}, ENROLLED=#{ENROLLED},TOTAL = #{TOTAL}
+        WHERE COURSE_ID = #{COURSE_ID}
+    </update>
+    <update id="updateWantedCourseNum" parameterType="map">
+        UPDATE CAPACITY
+        SET WANTED = #{WANTED}
+        WHERE COURSE_ID = #{COURSE_ID}
+    </update>
+</mapper>

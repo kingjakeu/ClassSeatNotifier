@@ -34,4 +34,14 @@ public class InfoService {
         }
         return classList;
     }
+
+    public List<Map<String, Object>> getNormalRemainCourse(){
+        List<Map<String, Object>> courseList = new LinkedList<>();
+        return courseList;
+    }
+
+    public List<Map<String, Object>> getMajorRemainCourse(){
+        List<Map<String, Object>> courseList = new LinkedList<>();
+        return courseList;
+    }
 }

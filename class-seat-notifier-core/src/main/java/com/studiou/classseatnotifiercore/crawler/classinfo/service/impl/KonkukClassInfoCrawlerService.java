@@ -37,6 +37,7 @@ public class KonkukClassInfoCrawlerService implements ClassInfoCrawlerService {
     private MajorInfoCrawler majorInfoCrawler;
 
     @Override
+    //@Scheduled(fixedDelay = 100000)
     @Scheduled(cron = "0 0 12 * * ?")
     public void searchClassInfoScheduler() {
         getClassInfoFromSource();

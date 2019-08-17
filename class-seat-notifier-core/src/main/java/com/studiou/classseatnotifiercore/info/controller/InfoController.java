@@ -28,4 +28,12 @@ public class InfoController {
     public List<Map<String, Object>> classList(@RequestParam List<String> keyword){
         return infoService.getClassList(keyword);
     }
+    @GetMapping(value = "/remaincourse/normal")
+    public List<Map<String, Object>> remainNormalCourseList(){
+        return infoService.getNormalRemainCourse();
+    }
+    @GetMapping(value = "/remaincourse/major")
+    public List<Map<String, Object>> remainMajorCourseList(){
+        return infoService.getMajorRemainCourse();
+    }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+
+<mapper namespace="com.studiou.classseatnotifiercore.department">
+    <select id="selectDeptIdList" resultType="String">
+        SELECT ID FROM DEPARTMENT
+    </select>
+    <insert id="insertDepartmentInfo" parameterType="map">
+        INSERT INTO DEPARTMENT
+        (ID, NAME)
+        VALUES
+        (#{ID}, #{NAME})
+        ON DUPLICATE KEY UPDATE
+        NAME=#{NAME}
+    </insert>
+</mapper>

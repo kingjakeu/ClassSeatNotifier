@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+
+<mapper namespace="com.studiou.classseatnotifiercore.konkuk.info">
+    <select id="selectMyCourseInfoList" parameterType="map" resultType="map">
+        SELECT
+        COURSE.ID, COURSE.NAME, COURSE.LOCATION,
+        CAPACITY.REMAIN, CAPACITY.ENROLLED, CAPACITY.TOTAL
+        FROM COURSE_WANTED
+        LEFT OUTER JOIN COURSE ON COURSE.ID = COURSE_WANTED.COURSE_ID
+        AND COURSE_WANTED.MEMBER_ID = #{MEMBER_ID}
+        LEFT OUTER JOIN CAPACITY ON COURSE.ID = CAPACITY.COURSE_ID
+    </select>
+    <select id="selectTopDeptCourseList" parameterType="map" resultType="map">
+        SELECT
+        COURSE.ID, COURSE.NAME, COURSE.LOCATION,
+        CAPACITY.REMAIN, CAPACITY.ENROLLED, CAPACITY.TOTAL
+        FROM COURSE
+        LEFT OUTER JOIN CAPACITY ON COURSE.ID = CAPACITY.COURSE_ID
+        AND COURSE.DEPT_ID = #{DEPT_ID}
+        ORDER BY CAPACITY.REMAIN ASC
+        LIMIT 5
+    </select>
+    <select id="selectTopNormalCourseList" resultType="map">
+        SELECT
+        COURSE.ID, COURSE.NAME, COURSE.LOCATION,
+        CAPACITY.REMAIN, CAPACITY.ENROLLED, CAPACITY.TOTAL
+        FROM COURSE
+        LEFT OUTER JOIN CAPACITY ON COURSE.ID = CAPACITY.COURSE_ID
+        AND COURSE.DEPT_ID = '006751'
+        AND COURSE.TYPE = '심교'
+        ORDER BY CAPACITY.REMAIN ASC
+        LIMIT 5
+    </select>
+    <select id="selectCourseListByKeyword" parameterType="map" resultType="map">
+        SELECT
+        COURSE.ID, COURSE.NAME, COURSE.LOCATION,
+        CAPACITY.REMAIN, CAPACITY.ENROLLED, CAPACITY.TOTAL
+        FROM COURSE JOIN CAPACITY ON COURSE.ID = CAPACITY.COURSE_ID
+        WHERE
+        COURSE.ID LIKE #{KEYWORD}
+        OR COURSE.NAME LIKE #{KEYWORD}
+        OR COURSE.INSTRUCTOR LIKE #{KEYWORD}
+    </select>
+    <update id="updateCourseWantedCap" parameterType="map">
+        UPDATE CAPACITY
+        SET
+        REMAIN = #{REMAIN},
+        TOTAL = #{TOTAL}
+        WHERE ID = #{ID}
+    </update>
+</mapper>

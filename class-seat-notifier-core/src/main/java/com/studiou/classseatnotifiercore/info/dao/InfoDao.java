@@ -10,8 +10,8 @@ import java.util.Map;
 
 @Repository
 public class InfoDao {
-    protected static final String TIMETABLE_NAMESPACE = "com.studiou.classseatnotifiercore.timetable.";
-    protected static final String SEAT_NAMESPACE = "com.studiou.classseatnotifiercore.seat.";
+    private static final String TIMETABLE_NAMESPACE = "com.studiou.classseatnotifiercore.timetable.";
+    private static final String SEAT_NAMESPACE = "com.studiou.classseatnotifiercore.seat.";
 
     @Autowired
     private SqlSession sqlSession;

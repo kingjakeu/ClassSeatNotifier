@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Repository
 public class DepartmentCrawlerDao {
-    protected static final String NAMESPACE = NameSpace.DEPARTMENT_NAMESPACE;
+    private static final String NAMESPACE = NameSpace.DEPARTMENT_NAMESPACE;
 
     @Autowired
     private SqlSession sqlSession;

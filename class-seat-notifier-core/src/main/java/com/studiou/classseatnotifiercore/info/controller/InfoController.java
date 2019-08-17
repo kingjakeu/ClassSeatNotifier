@@ -1,8 +1,8 @@
 package com.studiou.classseatnotifiercore.info.controller;
 
 import com.studiou.classseatnotifiercore.info.service.InfoService;
+import com.studiou.classseatnotifiercore.info.service.impl.KonkukInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -15,25 +15,31 @@ public class InfoController {
     @Autowired
     InfoService infoService;
 
-    @PostMapping(value = "/classwanted")
-    public Map<String, Object> wantClassSeat(@RequestParam String classCode){
-        Map<String, Object> wantSeatInfo = new LinkedHashMap<>();
-        wantSeatInfo.put("CLASS_CODE", classCode);
-        wantSeatInfo.put("WANTED_NUM", 1);
-        infoService.wantClassSeat(wantSeatInfo);
-        return wantSeatInfo;
-    }
+    @Autowired
+    KonkukInfoService konkukInfoService;
 
-    @GetMapping(value = "/classlist")
-    public List<Map<String, Object>> classList(@RequestParam List<String> keyword){
-        return infoService.getClassList(keyword);
+    @GetMapping(value = "/mycourselist")
+    public List<Map<String, Object>> myClassList(@RequestParam Map<String, Object> memberInfo){
+        return konkukInfoService.getMyCourseList(memberInfo);
     }
-    @GetMapping(value = "/remaincourse/normal")
-    public List<Map<String, Object>> remainNormalCourseList(){
-        return infoService.getNormalRemainCourse();
+    @GetMapping(value = "/toplist/department")
+    public List<Map<String, Object>> topDeptCourseList(@RequestParam Map<String, Object> memberInfo){
+        return konkukInfoService.topDeptCourseList(memberInfo);
     }
-    @GetMapping(value = "/remaincourse/major")
-    public List<Map<String, Object>> remainMajorCourseList(){
-        return infoService.getMajorRemainCourse();
+    @GetMapping(value = "/toplist/normal")
+    public List<Map<String, Object>> topNormalCourseList(){
+        return konkukInfoService.topNormalCourseList();
+    }
+    @GetMapping(value = "/searchcourse")
+    public List<Map<String, Object>> searchCourse(@RequestParam List<String> keyword){
+        return konkukInfoService.searchCourseList(keyword);
+    }
+    @PostMapping(value = "/wantcoursecap")
+    public Map<String, Object> courseWantedCap(@RequestParam String courseId){
+        Map<String, Object> wantCourseInfo = new LinkedHashMap<>();
+        wantCourseInfo.put("ID", courseId);
+        wantCourseInfo.put("WANTED", 1);
+        konkukInfoService.setCourseWantedCap(wantCourseInfo);
+        return wantCourseInfo;
     }
 }

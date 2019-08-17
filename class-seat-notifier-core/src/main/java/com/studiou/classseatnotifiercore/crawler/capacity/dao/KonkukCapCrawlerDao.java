@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Repository
 public class KonkukCapCrawlerDao {
-    protected static final String NAMESPACE = NameSpace.KONKUK_CAPACITY_NAMESPACE;
+    private static final String NAMESPACE = NameSpace.KONKUK_CAPACITY_NAMESPACE;
 
     @Autowired
     private SqlSession sqlSession;

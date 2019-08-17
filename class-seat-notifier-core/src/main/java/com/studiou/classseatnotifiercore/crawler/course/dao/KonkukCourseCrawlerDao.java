@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Repository
 public class KonkukCourseCrawlerDao {
-    protected static final String NAMESPACE = NameSpace.KONKUK_COURSE_NAMESPACE;
+    private static final String NAMESPACE = NameSpace.KONKUK_COURSE_NAMESPACE;
 
     @Autowired
     private SqlSession sqlSession;

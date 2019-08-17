@@ -25,7 +25,7 @@ public class KonkukSeatCrawlerService implements SeatCrawlerService {
     private SeatCrawlerDao seatCrawlerDao;
 
     @Override
-    @Scheduled(fixedRate = 50000000)
+    //@Scheduled(fixedRate = 50000000)
     public void searchSeatScheduler() {
         getSeatDataFromSource(getClassCodeList());
     }

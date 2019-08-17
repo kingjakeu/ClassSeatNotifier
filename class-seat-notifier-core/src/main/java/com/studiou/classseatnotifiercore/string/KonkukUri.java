@@ -6,5 +6,6 @@ public class KonkukUri {
     public static final String KONKUK_DEPT_URI = "https://kupis.konkuk.ac.kr/sugang/acd/cour/time/SeoulTimetableInfo.jsp";
     public static final String KONKUK_COURSE_MAIN_URI = "https://kupis.konkuk.ac.kr/sugang/acd/cour/time/SeoulTimetableInfo.jsp?";
     public static final String KONKUK_COURSE_OPT_URI = "ltYy="+ ConstStrings.YEAR+"&ltShtm="+ConstStrings.SEMESTER+"&openSust=";
-
+    public static final String KONKUK_CAPACITY_MAIN_URI= "https://kupis.konkuk.ac.kr/sugang/acd/cour/aply/CourInwonInqTime.jsp?";
+    public static final String KONKUK_CAPACITY_OPT_URI= "ltYy="+ ConstStrings.YEAR+"&ltShtm="+ConstStrings.SEMESTER+"&sbjtId=";
 }

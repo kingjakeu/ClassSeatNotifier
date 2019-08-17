@@ -45,20 +45,20 @@ public class KonkukSeatCrawlerService implements SeatCrawlerService {
             try {
                 Document doc = Jsoup.connect(url+classCode).post();
                 Elements element = doc.select("td.table_bg_white");
-                ArrayList<String> elementText = new ArrayList<>();
-                int elementSize = element.size();
-                for (int i=1; i<elementSize; i++){
-                    elementText.add(element.get(i).text());
-                }
-                int bfNum = Integer.parseInt(seatInfo.get("REMAIN_NUM").toString());
-                int remainNum = Integer.parseInt(elementText.get(1)) - Integer.parseInt(elementText.get(0));
-
-                if(remainNum>bfNum){
-                    /// PUSH WHO WANT THIS CLASS
-                    System.out.println("SEND PUSH");
-                }
-                seatInfo.put("REMAIN_NUM", remainNum);
-                seatInfo.put("TOTAL_NUM", elementText.get(1));
+//                ArrayList<String> elementText = new ArrayList<>();
+//                int elementSize = element.size();
+//                for (int i=1; i<elementSize; i++){
+//                    elementText.add(element.get(i).text());
+//                }
+//                int bfNum = Integer.parseInt(seatInfo.get("REMAIN_NUM").toString());
+//                int remainNum = Integer.parseInt(elementText.get(1)) - Integer.parseInt(elementText.get(0));
+//
+//                if(remainNum>bfNum){
+//                    /// PUSH WHO WANT THIS CLASS
+//                    System.out.println("SEND PUSH");
+//                }
+//                seatInfo.put("REMAIN_NUM", remainNum);
+//                seatInfo.put("TOTAL_NUM", elementText.get(1));
 
             } catch (IOException e) {
                 e.printStackTrace();

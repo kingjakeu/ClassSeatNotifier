@@ -1,5 +1,6 @@
 package com.studiou.classseatnotifiercore.crawler.course.service.impl;
 
+import com.studiou.classseatnotifiercore.crawler.capacity.dao.KonkukCapCrawlerDao;
 import com.studiou.classseatnotifiercore.crawler.course.dao.KonkukCourseCrawlerDao;
 import com.studiou.classseatnotifiercore.crawler.course.mapper.KonkukCourseMapper;
 import com.studiou.classseatnotifiercore.crawler.course.service.CourseCrawlerService;
@@ -26,11 +27,15 @@ public class KonkukCourseCrawlerService implements CourseCrawlerService {
     @Autowired
     private KonkukCourseCrawlerDao konkukCourseCrawlerDao;
 
+    @Autowired
+    private KonkukCapCrawlerDao konkukCapCrawlerDao;
+
     @Override
-    //@Scheduled(fixedDelay = 100000)
+    //@Scheduled(fixedDelay = 1000000)
     @Scheduled(cron = "0 0 12 * * ?")
     public void courseSearchScheduler() {
         this.getCourseInfoFromSource();
+        this.updateCourseInfo();
     }
 
     @Override
@@ -77,8 +82,8 @@ public class KonkukCourseCrawlerService implements CourseCrawlerService {
         List<String> courseIdList = konkukCourseCrawlerDao.selectCourseIdList();
         for (String courseId : courseIdList){
             Map<String, Object> courseInfo = new LinkedHashMap<>();
-            courseInfo.put("ID", courseId);
-            //konkukCourseCrawlerDao.insertCourseInfo(courseInfo);
+            courseInfo.put("COURSE_ID", courseId);
+            konkukCapCrawlerDao.insertCourseCapInfo(courseInfo);
         }
     }
 }

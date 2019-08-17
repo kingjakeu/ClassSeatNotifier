@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
 
 <mapper namespace="com.studiou.Courseseatnotifiercore.capacity">
-    <select id="selectCourseCodeList" resultType="map">
+    <select id="selectCourseInfoList" resultType="map">
         SELECT COURSE_ID, REMAIN FROM CAPACITY
         WHERE WANTED > 0
     </select>
@@ -10,6 +10,9 @@
         SELECT WANTED FROM CAPACITY WHERE COURSE_ID = ${COURSE_ID}
     </select>
     <insert id="insertCourseCapInfo" parameterType="map">
+        <if test="COURSE_ID!=null and COURSE_ID!=''">
+
+        </if>
         INSERT INTO CAPACITY
         (COURSE_ID
         <if test="REMAIN!=null and REMAIN!=''">

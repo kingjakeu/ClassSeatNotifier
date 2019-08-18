@@ -42,11 +42,24 @@
         OR COURSE.NAME LIKE #{KEYWORD}
         OR COURSE.INSTRUCTOR LIKE #{KEYWORD}
     </select>
+    <select id="selectCourseInfoByCourseId" parameterType="map" resultType="map">
+        SELECT
+        COURSE.ID, COURSE.NAME, COURSE.LOCATION,
+        CAPACITY.REMAIN, CAPACITY.ENROLLED, CAPACITY.TOTAL, CAPACITY.WANTED
+        FROM COURSE JOIN CAPACITY ON COURSE.ID = CAPACITY.COURSE_ID
+        WHERE
+        COURSE.ID = #{COURSE_ID}
+    </select>
+    <insert id="insertCourseWanted" parameterType="map">
+        INSERT INTO COURSE_WANTED
+        (COURSE_ID, MEMBER_ID)
+        VALUES
+        (#{COURSE_ID}, #{MEMBER_ID})
+    </insert>
     <update id="updateCourseWantedCap" parameterType="map">
         UPDATE CAPACITY
         SET
-        REMAIN = #{REMAIN},
-        TOTAL = #{TOTAL}
-        WHERE ID = #{ID}
+        WANTED = #{WANTED}
+        WHERE COURSE_ID = #{COURSE_ID}
     </update>
 </mapper>

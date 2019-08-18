@@ -28,7 +28,13 @@ public class KonkukInfoDao {
     public List<Map<String, Object>> selectCourseListByKeyword(Map<String, Object> searchInfo){
         return sqlSession.selectList(INFO_NAMESPACE+"selectCourseListByKeyword", searchInfo);
     }
+    public Map<String, Object> selectCourseInfoByCourseId(Map<String, Object> searchInfo){
+        return sqlSession.selectOne(INFO_NAMESPACE+"selectCourseInfoByCourseId", searchInfo);
+    }
     public void updateCourseWantedCap(Map<String, Object> courseInfo){
         sqlSession.update(INFO_NAMESPACE+"updateCourseWantedCap",courseInfo);
+    }
+    public void insertCourseWanted(Map<String, Object> courseInfo){
+        sqlSession.insert(INFO_NAMESPACE+"insertCourseWanted", courseInfo);
     }
 }

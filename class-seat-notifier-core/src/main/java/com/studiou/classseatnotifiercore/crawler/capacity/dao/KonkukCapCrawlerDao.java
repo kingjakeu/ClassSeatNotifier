@@ -19,6 +19,9 @@ public class KonkukCapCrawlerDao {
     public List<Map<String, Object>> selectCourseInfoList(){
         return sqlSession.selectList(NAMESPACE+"selectCourseInfoList");
     }
+    public List<Map<String, Object>> selectCourseInfoListNoLimit(){
+        return sqlSession.selectList(NAMESPACE+"selectCourseInfoListNoLimit");
+    }
     public void insertCourseCapInfo(Map<String, Object> courseInfo){
         sqlSession.insert(NAMESPACE+"insertCourseCapInfo", courseInfo);
     }

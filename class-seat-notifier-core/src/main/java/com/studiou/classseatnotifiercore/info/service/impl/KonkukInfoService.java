@@ -44,13 +44,12 @@ public class KonkukInfoService implements InfoService {
 
     @Override
     public void setCourseWantedCap(Map<String, Object> courseInfo) {
-        List<String> courseKeyword = new LinkedList<>();
-        courseKeyword.add(courseInfo.get("ID").toString());
-        Map<String, Object> wantCourseInfo = searchCourseList(courseKeyword).get(0);
-
+        System.out.println(courseInfo.toString());
+        Map<String, Object> wantCourseInfo = konkukInfoDao.selectCourseInfoByCourseId(courseInfo);
         int wantNum = Integer.valueOf(wantCourseInfo.get("WANTED").toString()) + Integer.valueOf(courseInfo.get("WANTED").toString());
         courseInfo.replace("WANTED", String.valueOf(wantNum));
         konkukInfoDao.updateCourseWantedCap(courseInfo);
+        konkukInfoDao.insertCourseWanted(courseInfo);
     }
 
 }

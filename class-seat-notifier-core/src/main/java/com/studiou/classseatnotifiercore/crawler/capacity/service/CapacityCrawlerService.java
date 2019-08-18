@@ -6,6 +6,6 @@ import java.util.Map;
 public interface CapacityCrawlerService {
     void capacitySearchScheduler();
     List<Map<String, Object>> getCourseInfoList();
-    void getCapacityDataFromSource();
+    void getCapacityDataFromSource(List<Map<String, Object>> courseIdList);
     void updateCapacityInfo(Map<String, Object> capacityInfo);
 }

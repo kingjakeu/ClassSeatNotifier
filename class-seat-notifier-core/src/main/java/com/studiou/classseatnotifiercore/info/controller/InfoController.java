@@ -35,9 +35,7 @@ public class InfoController {
         return konkukInfoService.searchCourseList(keyword);
     }
     @PostMapping(value = "/wantcoursecap")
-    public Map<String, Object> courseWantedCap(@RequestParam String courseId){
-        Map<String, Object> wantCourseInfo = new LinkedHashMap<>();
-        wantCourseInfo.put("ID", courseId);
+    public Map<String, Object> courseWantedCap(@RequestParam Map<String, Object> wantCourseInfo){
         wantCourseInfo.put("WANTED", 1);
         konkukInfoService.setCourseWantedCap(wantCourseInfo);
         return wantCourseInfo;

@@ -25,15 +25,21 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
     private KonkukCapCrawlerDao konkukCapCrawlerDao;
 
     @Override
-    @Scheduled(fixedRate = 50000000)
+    @Scheduled(fixedRate = 6000000)
     public void capacitySearchScheduler() {
-        this.getCapacityDataFromSource();
+        this.getCapacityDataFromSource(getCourseInfoList());
+    }
+
+
+    @Scheduled(cron = "0 0 12 * * ?")
+    public void allCapacitySearchScheduler() {
+        this.getCapacityDataFromSource(getCourseInfoListNoLimit());
     }
 
     @Override
-    public void getCapacityDataFromSource() {
+    public void getCapacityDataFromSource(List<Map<String, Object>> courseIdList) {
         StringBuilder capUri = new StringBuilder(mainUri).append(optionUri);
-        List<Map<String, Object>> courseIdList = getCourseInfoList();
+
         try{
             for(Map<String, Object> courseInfo : courseIdList){
                 String courseId = courseInfo.get("COURSE_ID").toString();
@@ -49,6 +55,10 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
     @Override
     public List<Map<String, Object>> getCourseInfoList() {
         List<Map<String, Object>> courseIdList = konkukCapCrawlerDao.selectCourseInfoList();
+        return courseIdList;
+    }
+    public List<Map<String, Object>> getCourseInfoListNoLimit() {
+        List<Map<String, Object>> courseIdList = konkukCapCrawlerDao.selectCourseInfoListNoLimit();
         return courseIdList;
     }
     public void insertCapInfoFromSource(Elements elements, Map<String, Object> courseInfo){

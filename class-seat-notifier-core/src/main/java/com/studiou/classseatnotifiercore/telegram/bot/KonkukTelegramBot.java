@@ -42,8 +42,8 @@ public class KonkukTelegramBot extends TelegramLongPollingBot {
             String messageText = update.getMessage().getText();
             long chatId = update.getMessage().getChatId();
             if(messageText.equals("/start")){
-                this.insertNewTelegramUser(update);
                 sendMessage(chatId, "올킬 봇 시작!! \n 과목 등록을 원하시면 과목번호 등록(ex. 1234 등록)이라고 메시지를 보내세요.\n 현황을 보내시면 현재 등록한 과목 현황이 뜹니다.");
+                this.insertNewTelegramUser(update);
             }else{
                 String[] messageArr = messageText.split(" ");
                 if(messageArr.length == 2){

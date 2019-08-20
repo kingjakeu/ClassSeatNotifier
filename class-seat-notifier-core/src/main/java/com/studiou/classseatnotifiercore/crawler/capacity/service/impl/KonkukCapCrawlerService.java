@@ -31,12 +31,14 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
     private KonkukInfoService konkukInfoService;
 
     @Override
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 3600000)
+    //@Scheduled(fixedRate = 2000)
     public void capacitySearchScheduler() {
+        System.out.println("------------CAP CRAWL----------");
         this.getCapacityDataFromSource(getCourseInfoList());
     }
 
-    //@Scheduled(fixedRate = 6000)
+    //@Scheduled(fixedRate = 3600000)
     @Scheduled(cron = "0 0 12 * * ?")
     public void allCapacitySearchScheduler() {
         this.getCapacityDataFromSource(getCourseInfoListNoLimit());

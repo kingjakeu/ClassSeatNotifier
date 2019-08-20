@@ -11,7 +11,6 @@ import org.telegram.telegrambots.ApiContextInitializer;
 public class ClassSeatNotifierCoreApplication {
 
     public static void main(String[] args) {
-
         ApiContextInitializer.init();
         SpringApplication.run(ClassSeatNotifierCoreApplication.class, args);
     }

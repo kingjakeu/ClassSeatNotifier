@@ -25,12 +25,12 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
     private KonkukCapCrawlerDao konkukCapCrawlerDao;
 
     @Override
-    @Scheduled(fixedRate = 6000000)
+    @Scheduled(fixedRate = 10000)
     public void capacitySearchScheduler() {
         this.getCapacityDataFromSource(getCourseInfoList());
     }
 
-
+    //@Scheduled(fixedRate = 6000)
     @Scheduled(cron = "0 0 12 * * ?")
     public void allCapacitySearchScheduler() {
         this.getCapacityDataFromSource(getCourseInfoListNoLimit());

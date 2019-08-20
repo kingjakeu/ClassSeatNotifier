@@ -35,11 +35,13 @@ public class KonkukDeptCrawler implements DepartmentCrawler {
             Document doc = Jsoup.connect(mainUri).get();
             Elements element = doc.select("SELECT#openSust");
             for (Element el : element.select("OPTION")){
+
                 Map<String, Object> deptInfo = new LinkedHashMap<>();
                 deptInfo.put("ID", el.attr("value"));
                 deptInfo.put("NAME", el.text());
-                this.insertDeptInfo(deptInfo);
+
                 System.out.println(deptInfo.toString());
+                this.insertDeptInfo(deptInfo);
             }
         }catch (IOException e){
             e.printStackTrace();

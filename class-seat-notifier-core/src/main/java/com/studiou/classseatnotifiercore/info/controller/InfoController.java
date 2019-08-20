@@ -30,10 +30,12 @@ public class InfoController {
     public List<Map<String, Object>> topNormalCourseList(){
         return konkukInfoService.topNormalCourseList();
     }
+
     @GetMapping(value = "/searchcourse")
     public List<Map<String, Object>> searchCourse(@RequestParam List<String> keyword){
         return konkukInfoService.searchCourseList(keyword);
     }
+
     @PostMapping(value = "/wantcoursecap")
     public Map<String, Object> courseWantedCap(@RequestParam Map<String, Object> wantCourseInfo){
         wantCourseInfo.put("WANTED", 1);

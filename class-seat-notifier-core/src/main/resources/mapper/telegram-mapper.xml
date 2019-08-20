@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+
+<mapper namespace="com.studiou.classseatnotifiercore.telegram">
+    <select id="selectTelegramUserList" resultType="map">
+        SELECT CHAT_ID
+        FROM TELEGRAM_USER
+    </select>
+    <select id="selectTelegramUserById" parameterType="map" resultType="map">
+        SELECT CHAT_ID
+        FROM TELEGRAM_USER
+        WHERE CHAT_ID = ${CHAT_ID}
+    </select>
+    <insert id="insertTelegramUser" parameterType="map">
+        INSERT INTO TELEGRAM_USER
+        (CHAT_ID
+        <if test="FIRST_NAME!=null and FIRST_NAME!=''">
+            ,FIRST_NAME
+        </if>
+        <if test="LAST_NAME!=null and LAST_NAME!=''">
+            ,LAST_NAME
+        </if>
+        <if test="NICKNAME!=null and NICKNAME!=''">
+            ,NICKNAME
+        </if>
+        )
+        VALUES(
+        #{CHAT_ID}
+        <if test="FIRST_NAME!=null and FIRST_NAME!=''">
+            ,#{FIRST_NAME}
+        </if>
+        <if test="LAST_NAME!=null and LAST_NAME!=''">
+            ,#{LAST_NAME}
+        </if>
+        <if test="NICKNAME!=null and NICKNAME!=''">
+            ,#{NICKNAME}
+        </if>
+        )
+    </insert>
+</mapper>

@@ -3,7 +3,9 @@ package com.studiou.classseatnotifiercore.crawler.capacity.service.impl;
 import com.studiou.classseatnotifiercore.crawler.capacity.dao.KonkukCapCrawlerDao;
 import com.studiou.classseatnotifiercore.crawler.capacity.service.CapacityCrawlerService;
 import com.studiou.classseatnotifiercore.crawler.course.dao.KonkukCourseCrawlerDao;
+import com.studiou.classseatnotifiercore.info.service.impl.KonkukInfoService;
 import com.studiou.classseatnotifiercore.string.KonkukUri;
+import com.studiou.classseatnotifiercore.telegram.bot.KonkukTelegramBot;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -12,9 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class KonkukCapCrawlerService implements CapacityCrawlerService {
@@ -23,6 +23,12 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
 
     @Autowired
     private KonkukCapCrawlerDao konkukCapCrawlerDao;
+
+    @Autowired
+    private KonkukTelegramBot konkukTelegramBot;
+
+    @Autowired
+    private KonkukInfoService konkukInfoService;
 
     @Override
     @Scheduled(fixedRate = 10000)
@@ -74,7 +80,20 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
             int bfNum = Integer.parseInt(courseInfo.get("REMAIN").toString());
             if(remainNum>bfNum){
                 /// PUSH WHO WANT THIS CLASS
+                List<String> keyword = new LinkedList<>();
+                keyword.add(courseInfo.get("COURSE_ID").toString());
+                List<Map<String, Object>> courseInfoList = konkukInfoService.searchCourseList(keyword);
+                StringBuilder messageText = new StringBuilder().append("!! 빈자리 알림 !!").append("\n");
+                for (Map<String, Object> notiCourseInfo : courseInfoList){
+                    messageText.append(notiCourseInfo.get("ID").toString()).append("\n");
+                    messageText.append(notiCourseInfo.get("NAME").toString()).append("\n");
+                    messageText.append(remainNum).append("자리 남았습니다.");
+                    messageText.append("\n");
+                }
+
                 System.out.println("SEND PUSH");
+
+                konkukTelegramBot.sendMessage(messageText.toString());
             }
         }
         courseInfo.put("REMAIN", remainNum);

@@ -31,8 +31,8 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
     private KonkukInfoService konkukInfoService;
 
     @Override
-    @Scheduled(fixedRate = 3600000)
-    //@Scheduled(fixedRate = 2000)
+    //@Scheduled(fixedRate = 3600000)
+    @Scheduled(fixedRate = 5000)
     public void capacitySearchScheduler() {
         System.out.println("------------CAP CRAWL----------");
         this.getCapacityDataFromSource(getCourseInfoList());

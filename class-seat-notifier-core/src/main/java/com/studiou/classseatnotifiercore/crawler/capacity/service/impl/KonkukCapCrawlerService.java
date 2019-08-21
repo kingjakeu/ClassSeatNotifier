@@ -6,6 +6,7 @@ import com.studiou.classseatnotifiercore.crawler.course.dao.KonkukCourseCrawlerD
 import com.studiou.classseatnotifiercore.info.service.impl.KonkukInfoService;
 import com.studiou.classseatnotifiercore.string.KonkukUri;
 import com.studiou.classseatnotifiercore.telegram.bot.KonkukTelegramBot;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -32,7 +33,7 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
 
     @Override
     //@Scheduled(fixedRate = 3600000)
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 2000)
     public void capacitySearchScheduler() {
         System.out.println("------------CAP CRAWL----------");
         this.getCapacityDataFromSource(getCourseInfoList());

@@ -37,7 +37,7 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
 
     @Override
     //@Scheduled(fixedRate = 3600000)
-    //@Scheduled(fixedRate = 2000)
+    @Scheduled(fixedRate = 1500)
     public void capacitySearchScheduler() {
         System.out.println("------------CAP CRAWL----------");
         this.getCapacityDataFromSource(getCourseInfoList());
@@ -89,7 +89,11 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
             int bfNum = Integer.parseInt(courseInfo.get("REMAIN").toString());
             courseInfo.put("REMAIN", remainNum);
             if(remainNum>bfNum){
-                sendPush(courseInfo);
+                //Temp Setting
+                if(courseInfo.get("COURSE_ID").equals("0034")){
+                    sendPush(courseInfo);
+                    autoSugang("0034");
+                }
             }
         }
         courseInfo.put("ENROLLED", elementText.get(0));

@@ -92,7 +92,6 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
                 //Temp Setting
                 if(courseInfo.get("COURSE_ID").equals("0034")){
                     sendPush(courseInfo);
-                    autoSugang("0034");
                 }
             }
         }
@@ -119,11 +118,14 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
             messageText.append("\n");
         }
         System.out.println("SEND PUSH");
+        messageText.append(autoSugang("0034"));
         konkukTelegramBot.sendMessage(messageText.toString());
     }
-    private void autoSugang(String courseId){
+    private String autoSugang(String courseId){
+        String result = courseId+" 신청 시도 ";
         if(courseId.equals("0034")){
-            autoBot.sugangBotExecute();
+             result = result+autoBot.sugangBotExecute();
         }
+        return result;
     }
 }

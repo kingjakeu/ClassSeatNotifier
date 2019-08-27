@@ -16,9 +16,9 @@ public class AutoBot {
     private final String sugangUrl = "https://kupis.konkuk.ac.kr/sugang/acd/cour/aply/courLessinApplyReg.jsp?strSaveCheck=Y&strBrowser=safari&strSbjtId=0034&strKcuCount=0&CuriCdtWarnFg=11.0&MinCuriCnt=1&CuriCnt=4&CuriCdt=18.0&CuriMax=18&CuriAdd=0&PreSngj=3.56&Schdiv=1&strCorsNm=&strDeptCd=&strMultPobtDiv01=";
     private final String loginUrl = "https://kupis.konkuk.ac.kr/sugang/login/loginBtm.jsp?task=f_CourUserLogin&oldStdNo=&ltYy=2019&ltShtm=B01012&campFg=1&stdNo=pado&pwd=dusgml1818%21&idPassGubun=1";
 
-    public void sugangBotExecute(){
+    public String sugangBotExecute(){
         String loginCookie = getLoginCookie();
-        sendSugangRequest(sugangUrl, loginCookie);
+        return sendSugangRequest(sugangUrl, loginCookie);
     }
     private String getLoginCookie(){
         String loginCookie = "";
@@ -45,7 +45,7 @@ public class AutoBot {
         }
         return loginCookie;
     }
-    private void sendSugangRequest(String url, String loginCookie){
+    private String sendSugangRequest(String url, String loginCookie){
         try{
             String userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36";
 
@@ -65,9 +65,11 @@ public class AutoBot {
             Element inputElement = doc.select("input[NAME=CuriCdt]").first();
             if(inputElement.val().equals("17.0")){
                 System.out.println("SUCCESS SUGANG");
+                return "SUCCUESS";
             }
         }catch (IOException e){
             e.printStackTrace();
         }
+        return "FAIL";
     }
 }

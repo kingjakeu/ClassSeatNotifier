@@ -1,5 +1,6 @@
 package com.studiou.classseatnotifiercore.crawler.capacity.service.impl;
 
+import com.studiou.classseatnotifiercore.crawler.auto.AutoBot;
 import com.studiou.classseatnotifiercore.crawler.capacity.dao.KonkukCapCrawlerDao;
 import com.studiou.classseatnotifiercore.crawler.capacity.service.CapacityCrawlerService;
 import com.studiou.classseatnotifiercore.crawler.course.dao.KonkukCourseCrawlerDao;
@@ -31,9 +32,12 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
     @Autowired
     private KonkukInfoService konkukInfoService;
 
+    @Autowired
+    private AutoBot autoBot;
+
     @Override
     //@Scheduled(fixedRate = 3600000)
-    @Scheduled(fixedRate = 2000)
+    //@Scheduled(fixedRate = 2000)
     public void capacitySearchScheduler() {
         System.out.println("------------CAP CRAWL----------");
         this.getCapacityDataFromSource(getCourseInfoList());
@@ -45,10 +49,12 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
         this.getCapacityDataFromSource(getCourseInfoListNoLimit());
     }
 
+    /**
+     *
+     * */
     @Override
     public void getCapacityDataFromSource(List<Map<String, Object>> courseIdList) {
         StringBuilder capUri = new StringBuilder(mainUri).append(optionUri);
-
         try{
             for(Map<String, Object> courseInfo : courseIdList){
                 String courseId = courseInfo.get("COURSE_ID").toString();
@@ -81,25 +87,11 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
 
         if(courseInfo.get("REMAIN") != null){
             int bfNum = Integer.parseInt(courseInfo.get("REMAIN").toString());
+            courseInfo.put("REMAIN", remainNum);
             if(remainNum>bfNum){
-                /// PUSH WHO WANT THIS CLASS
-                List<String> keyword = new LinkedList<>();
-                keyword.add(courseInfo.get("COURSE_ID").toString());
-                List<Map<String, Object>> courseInfoList = konkukInfoService.searchCourseList(keyword);
-                StringBuilder messageText = new StringBuilder().append("!! 빈자리 알림 !!").append("\n");
-                for (Map<String, Object> notiCourseInfo : courseInfoList){
-                    messageText.append(notiCourseInfo.get("ID").toString()).append("\n");
-                    messageText.append(notiCourseInfo.get("NAME").toString()).append("\n");
-                    messageText.append(remainNum).append("자리 남았습니다.");
-                    messageText.append("\n");
-                }
-
-                System.out.println("SEND PUSH");
-
-                konkukTelegramBot.sendMessage(messageText.toString());
+                sendPush(courseInfo);
             }
         }
-        courseInfo.put("REMAIN", remainNum);
         courseInfo.put("ENROLLED", elementText.get(0));
         courseInfo.put("TOTAL", elementText.get(1));
         System.out.println(courseInfo.toString());
@@ -109,5 +101,25 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
     public void updateCapacityInfo(Map<String, Object> courseInfo) {
         konkukCapCrawlerDao.updateCourseCapInfo(courseInfo);
 
+    }
+    private void sendPush(Map<String, Object> courseInfo){
+        /// PUSH WHO WANT THIS CLASS
+        List<String> keyword = new LinkedList<>();
+        keyword.add(courseInfo.get("COURSE_ID").toString());
+        List<Map<String, Object>> courseInfoList = konkukInfoService.searchCourseList(keyword);
+        StringBuilder messageText = new StringBuilder().append("!! 빈자리 알림 !!").append("\n");
+        for (Map<String, Object> notiCourseInfo : courseInfoList){
+            messageText.append(notiCourseInfo.get("ID").toString()).append("\n");
+            messageText.append(notiCourseInfo.get("NAME").toString()).append("\n");
+            messageText.append(courseInfo.get("REMAIN")).append("자리 남았습니다.");
+            messageText.append("\n");
+        }
+        System.out.println("SEND PUSH");
+        konkukTelegramBot.sendMessage(messageText.toString());
+    }
+    private void autoSugang(String courseId){
+        if(courseId.equals("0034")){
+            autoBot.sugangBotExecute();
+        }
     }
 }

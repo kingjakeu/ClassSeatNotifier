@@ -16,7 +16,6 @@ public class ClassSeatNotifierCoreApplication {
         ApiContextInitializer.init();
     }
     public static void main(String[] args) {
-        //ApiContextInitializer.init();
         SpringApplication.run(ClassSeatNotifierCoreApplication.class, args);
     }
 

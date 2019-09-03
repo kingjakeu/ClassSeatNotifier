@@ -38,7 +38,7 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
 
     @Override
     //@Scheduled(fixedRate = 3600000)
-    //@Scheduled(fixedRate = 1500)
+    @Scheduled(fixedRate = 1500)
     public void capacitySearchScheduler() {
         System.out.println("------------CAP CRAWL----------");
         this.getCapacityDataFromSource(getCourseInfoList());
@@ -48,33 +48,6 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
     @Scheduled(cron = "0 0 12 * * ?")
     public void allCapacitySearchScheduler() {
         this.getCapacityDataFromSource(getCourseInfoListNoLimit());
-    }
-    @Scheduled(fixedRate = 10000000)
-    public void test(){
-        String loginCookie = "";
-        String userAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1";
-        try{
-            Connection.Response response = Jsoup.connect("https://kupis.konkuk.ac.kr/sugang/acd/cour/time/SeoulTimetableInfo.jsp?")
-                    .userAgent(userAgent)
-                    .timeout(3000)
-                    .header("Origin", "https://kupis.konkuk.ac.kr")
-                    .header("Referer", "https://kupis.konkuk.ac.kr/sugang/acd/cour/time/SeoulTimetableInfo.jsp?")
-                    .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
-                    .header("Content-Type", "application/x-www-form-urlencoded")
-                    .header("Accept-Encoding", "gzip, deflate, br")
-                    .header("Accept-Language", "ko-KR,ko;q=0.8,en-US;q=0.6,en;q=0.4")
-                    .method(Connection.Method.POST)
-                    .execute();
-            Map<String , String> cookies = response.cookies();
-            StringBuilder sb = new StringBuilder("WMONID=").append(cookies.get("WMONID")).append("; ")
-                    .append("JSESSIONID=").append(cookies.get("JSESSIONID"));
-            loginCookie = sb.toString();
-            System.out.println(loginCookie);
-            Document doc = response.parse();
-            System.out.println(doc.toString());
-        }catch (IOException e){
-            e.printStackTrace();
-        }
     }
     /**
      *

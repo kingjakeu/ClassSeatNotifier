@@ -32,7 +32,7 @@ public class KonkukCourseCrawlerService implements CourseCrawlerService {
 
     @Override
     //@Scheduled(fixedDelay = 1000000)
-    @Scheduled(cron = "0 0 12 * * ?")
+    //@Scheduled(cron = "0 0 12 * * ?")
     public void courseSearchScheduler() {
         this.getCourseInfoFromSource();
         this.updateCourseInfo();
@@ -44,6 +44,7 @@ public class KonkukCourseCrawlerService implements CourseCrawlerService {
         //TODO : implement get department info
         List<String> deptIdList = new LinkedList<>();
         deptIdList.add("127114");
+
         try{
             for(String deptId : deptIdList) {
                 StringBuilder url = new StringBuilder(courseUri).append(deptId);

@@ -4,8 +4,6 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -13,8 +11,12 @@ import java.util.Map;
 
 @Service
 public class AutoBot {
-    private final String sugangUrl = "https://kupis.konkuk.ac.kr/sugang/acd/cour/aply/courLessinApplyReg.jsp?strSaveCheck=Y&strBrowser=safari&strSbjtId=0034&strKcuCount=0&CuriCdtWarnFg=11.0&MinCuriCnt=1&CuriCnt=4&CuriCdt=18.0&CuriMax=18&CuriAdd=0&PreSngj=3.56&Schdiv=1&strCorsNm=&strDeptCd=&strMultPobtDiv01=";
-    private final String loginUrl = "https://kupis.konkuk.ac.kr/sugang/login/loginBtm.jsp?task=f_CourUserLogin&oldStdNo=&ltYy=2019&ltShtm=B01012&campFg=1&stdNo=pado&pwd=dusgml1818%21&idPassGubun=1";
+    //private final String sugangUrl = "https://kupis.konkuk.ac.kr/sugang/acd/cour/aply/courLessinApplyReg.jsp?strSaveCheck=Y&strBrowser=safari&strSbjtId=0034&strKcuCount=0&CuriCdtWarnFg=11.0&MinCuriCnt=1&CuriCnt=4&CuriCdt=18.0&CuriMax=18&CuriAdd=0&PreSngj=3.56&Schdiv=1&strCorsNm=&strDeptCd=&strMultPobtDiv01=";
+    //private final String loginUrl = "https://kupis.konkuk.ac.kr/sugang/login/loginBtm.jsp?task=f_CourUserLogin&oldStdNo=&ltYy=2019&ltShtm=B01012&campFg=1&stdNo=pado&pwd=dusgml1818%21&idPassGubun=1";
+
+    private final String sugangUrl = "https://kupis.konkuk.ac.kr/sugang/acd/cour/aply/courLessinApplyReg.jsp?strSaveCheck=Y&strBrowser=chrome&strSbjtId=0733&strKcuCount=0&CuriCdtWarnFg=12.0&MinCuriCnt=1&CuriCnt=4&CuriCdt=12.0&CuriMax=21&CuriAdd=0&PreSngj=3.96&Schdiv=1&strCorsNm=&strDeptCd=&strMultPobtDiv01=";
+    private final String loginUrl = "https://kupis.konkuk.ac.kr/sugang/login/loginBtm.jsp?task=f_CourUserLogin&oldStdNo=&ltYy=2019&ltShtm=B01012&campFg=1&stdNo=kjb4381&pwd=ready4381%21&idPassGubun=1";
+
 
     public String sugangBotExecute(){
         String loginCookie = getLoginCookie();
@@ -63,7 +65,7 @@ public class AutoBot {
                     .execute();
             Document doc = response.parse();
             Element inputElement = doc.select("input[NAME=CuriCdt]").first();
-            if(inputElement.val().equals("17.0")){
+            if(inputElement.val().equals("15.0")){
                 System.out.println("SUCCESS SUGANG");
                 return "SUCCUESS";
             }

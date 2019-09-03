@@ -70,6 +70,8 @@ public class KonkukCapCrawlerService implements CapacityCrawlerService {
                     .append("JSESSIONID=").append(cookies.get("JSESSIONID"));
             loginCookie = sb.toString();
             System.out.println(loginCookie);
+            Document doc = response.parse();
+            System.out.println(doc.toString());
         }catch (IOException e){
             e.printStackTrace();
         }
